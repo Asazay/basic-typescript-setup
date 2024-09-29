@@ -1,0 +1,46 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "node ./dist/server.js",
+    "start": "tsc && npm run dev"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "typescript",
+    "orm",
+    "mysql",
+    "sequelize",
+    "crud",
+    "restapi",
+    "rest",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@mysql/xdevapi": "^8.0.35",
+    "@types/mysql": "^2.15.26",
+    "bcrypt": "^5.1.1",
+    "bcrypt-ts": "^5.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.3",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.4",
+    "bcrypt-ts": "^5.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
