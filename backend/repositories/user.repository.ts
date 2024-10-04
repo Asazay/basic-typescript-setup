@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface{
             //     hashedPass = hashSync(user.password, 10);
             // }
 
-            let newUser = await User.scope().create({
+            let newUser : User = await User.create({
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
@@ -32,8 +32,9 @@ class UserRepository implements UserRepositoryInterface{
             });
 
             if(newUser) {
-                console.log(newUser)
-                return newUser;
+                let userInfo = newUser.dataValues;
+                delete userInfo.password;
+                return userInfo;
             }
             else throw new Error("Something went wrong.")
         }
@@ -88,11 +89,19 @@ class UserRepository implements UserRepositoryInterface{
         const {firstName, lastName, email, username} = data;
 
         try{
-            const updatedUser = await User.update({
+            let updatedUser : any = await User.update({
             firstName, lastName, email, username
             }, {where: {id : userId}, returning: true});
 
-            if(updatedUser) return updatedUser[1]
+            if(updatedUser) {
+                updatedUser = await User.findOne({
+                    where: {
+                        id: userId
+                    }
+                })
+
+                return updatedUser;
+            }
         }
         catch(e){
             if(e instanceof Error){
