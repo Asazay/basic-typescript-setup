@@ -1,7 +1,12 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import {Model, Table, Column, DataType, DefaultScope, Scopes} from "sequelize-typescript";
+
+
+@DefaultScope(() => ({
+    attributes: ['id', 'firstName', 'lastName', 'email', 'username']
+}))
 
 @Table({
-    tableName: 'Users'
+    tableName: 'Users',
 })
 
 export default class User extends Model{
@@ -18,33 +23,33 @@ export default class User extends Model{
         allowNull: true,
         field: "firstName"
     })
-    firstName? : string;
+    declare firstName? : string;
 
     @Column({
         type: DataType.STRING(16),
         allowNull: true,
         field: "lastName"
     })
-    lastName? : string;
+    declare lastName? : string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
         field: "email"
     })
-    email? : string;
+    declare email? : string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
         field: "username"
     })
-    username? : string
+    declare username? : string
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
         field: "password"
     })
-    password? : string
+    declare password? : string
 }

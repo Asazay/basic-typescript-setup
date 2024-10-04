@@ -17,13 +17,13 @@ class UserRoutes{
         this.router.get("/", this.controller.getAll);
 
         // Get user by id
-        this.router.get("/:id", this.controller.getById);
+        this.router.get("/:userId", this.controller.getById);
 
         // Update user with id
-        this.router.put("/:id", this.controller.update);
+        this.router.put("/:userId", this.controller.update);
 
         // Delete a user with id
-        this.router.delete("/:id", this.controller.delete);
+        this.router.delete("/:userId", this.controller.delete);
     }
 }
 

@@ -18,8 +18,8 @@ function instanceOfUser(object: any): boolean {
 
 export default class UserController {
     async create(req: Request, res: Response) {
-        if (!req.body.name) {
-            res.status(400).send({
+        if (!req.body.email) {
+            res.status(400).json({
                 message: "Invalid request body"
             })
         }
@@ -27,10 +27,10 @@ export default class UserController {
         try {
             const user: User = req.body;
             const createdUser = await UserRepository.create(user)
-            res.status(201).send(createdUser)
+            res.status(201).json(createdUser)
         } catch (e) {
             if (e instanceof Error) {
-                res.status(400).send({
+                res.status(400).json({
                     message: e.message
                 })
             }
@@ -40,10 +40,10 @@ export default class UserController {
     async getAll(req: Request, res: Response) {
         try {
             const users = await UserRepository.getAll()
-            res.status(200).send(users)
+            res.status(200).json(users)
         } catch (e) {
             if (e instanceof Error) {
-                res.status(400).send({
+                res.status(400).json({
                     message: e.message
                 })
             }
@@ -51,23 +51,23 @@ export default class UserController {
     }
 
     async getById(req: Request, res: Response) {
-        if (!req.params.userId) {
-            res.status(400).send({
-                message: "User id required"
+        if (!req.params.userId || !Number(req.params.userId)) {
+            res.status(400).json({
+                message: "User id is required"
             })
         }
 
-        try {
+        else try {
 
             const theUser = await UserRepository.getById(parseInt(req.params.userId));
 
-            if (theUser) res.status(200).send(theUser)
+            if (theUser) res.status(200).json(theUser)
 
-            else res.status(404).send({
+            else res.status(404).json({
                 message: `The user with id ${req.params.userId} doesnt exist.`
             })
         } catch (e) {
-            res.status(500).send({
+            res.status(500).json({
                 message: "A error occurred while attempting to find the user."
             })
         }
@@ -75,7 +75,7 @@ export default class UserController {
 
     async update(req: Request, res: Response) {
         if (!req.body || req.body.name) {
-            res.status(400).send({
+            res.status(400).json({
                 message: "Invalid request body"
             })
         }
@@ -86,14 +86,14 @@ export default class UserController {
 
             const theUser = await UserRepository.update(parseInt(userId), user);
 
-            if (theUser) res.status(201).send(theUser)
+            if (theUser) res.status(201).json(theUser)
 
-            else res.status(400).send({
+            else res.status(400).json({
                 message: "A error occurred while trying to update the user."
             })
         } catch (e) {
             if (e instanceof Error) {
-                res.status(500).send({
+                res.status(500).json({
                     message: e.message
                 })
             }
@@ -107,10 +107,10 @@ export default class UserController {
             const deleted = await UserRepository.delete(userId)
 
             if (deleted.hasOwnProperty('success')) {
-                res.status(201).send(deleted)
-            } else res.status(400).send(deleted)
+                res.status(201).json(deleted)
+            } else res.status(400).json(deleted)
         } catch (e) {
-            res.status(500).send({
+            res.status(500).json({
                 message: `Could not delete user with id ${userId}.`
             });
         }

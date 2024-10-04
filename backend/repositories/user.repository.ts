@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface{
             //     hashedPass = hashSync(user.password, 10);
             // }
 
-            const newUser = await User.create({
+            let newUser = await User.scope().create({
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
@@ -31,12 +31,15 @@ class UserRepository implements UserRepositoryInterface{
                 password: user.password
             });
 
-            if(newUser) return newUser;
+            if(newUser) {
+                console.log(newUser)
+                return newUser;
+            }
             else throw new Error("Something went wrong.")
         }
         catch(e){
             if(e instanceof Error){
-                return e.message
+                return  "Error: " + e.message
             }
         }
     }
