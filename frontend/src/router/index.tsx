@@ -10,6 +10,10 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Homepage/>
+            },
+            {
+                path: '/test',
+                element: <h1>This is a test page</h1>
             }
         ],
     }
