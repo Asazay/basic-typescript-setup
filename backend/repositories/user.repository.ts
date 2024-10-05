@@ -1,6 +1,5 @@
 import User from '../db/models/user.model'
-// import {hashSync} from 'bcrypt-ts'
-// import {hashSync} from "bcryptjs";
+import {hashSync} from "bcryptjs";
 
 interface UserRepositoryInterface {
     create(user: User): Promise<User | string>;
@@ -28,7 +27,7 @@ class UserRepository implements UserRepositoryInterface{
                 lastName: user.lastName,
                 email: user.email,
                 username: user.username,
-                password: user.password
+                password: user.password ? hashSync(user.password, 10) : null
             });
 
             if(newUser) {
