@@ -1,8 +1,8 @@
 import {compose, configureStore, Tuple} from '@reduxjs/toolkit'
 import logger from 'redux-logger';
 import {thunk} from 'redux-thunk';
-
-import sessionReducer from '../redux/session'
+// import sessionReducer from '../redux/session'
+import rootReducer from '../reducers'
 
 declare global {
     interface Window {
@@ -18,8 +18,11 @@ if(process.env.NODE_ENV === 'production'){
 
 else applyMw = (_gdm: any) => new Tuple(thunk, logger)
 
+
 const configStore = configureStore({
-    reducer: sessionReducer,
+    reducer: {
+        rootReducer,
+    },
     middleware: getDefaultMiddleware => applyMw(getDefaultMiddleware)
 })
 
