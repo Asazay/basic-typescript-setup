@@ -1,6 +1,6 @@
 import * as UserTypes from './types.ts';
 import UserService from "../services/UserService.ts";
-import {Dispatch} from "redux";
+import {Dispatch, UnknownAction} from "redux";
 
 interface CreateUser {
     firstName : string
@@ -10,7 +10,7 @@ interface CreateUser {
     password : string
 }
 6
-export const getUsers = () => async (_dispatch : Dispatch) : Promise<any> => {
+export const getUsers = () => async (_dispatch : Dispatch) : Promise<UnknownAction> => {
     try{
         const res = await UserService.getAll();
 
@@ -22,6 +22,8 @@ export const getUsers = () => async (_dispatch : Dispatch) : Promise<any> => {
 
             return Promise.resolve(res.data)
         }
+
+        else throw new Error('res failed')
     }
     catch (e) {
         return Promise.reject(e)
@@ -40,6 +42,26 @@ export const createUser = (_data : CreateUser) => async (_dispatch : Dispatch) =
 
             return Promise.resolve(res.data)
         }
+    }
+    catch (e) {
+        return Promise.reject(e)
+    }
+}
+
+export const deleteUser = (userId : number) => async (_dispatch : Dispatch) => {
+    try{
+        const res = await UserService.deleteUser(userId)
+
+        if(res){
+            _dispatch({
+                type: UserTypes.DELETE_USER,
+                payload: res.data
+            });
+
+            return Promise.resolve(res.data)
+        }
+
+        else throw new Error("Couldn't delete user")
     }
     catch (e) {
         return Promise.reject(e)
