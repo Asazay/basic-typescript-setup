@@ -1,4 +1,4 @@
-
+/src/.env
 /node_modules/
 /dist/
 .idea/
@@ -24,3 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+/tsconfig.app.tsbuildinfo
+/tsconfig.node.tsbuildinfo
