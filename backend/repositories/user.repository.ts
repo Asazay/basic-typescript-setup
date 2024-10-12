@@ -53,7 +53,7 @@ class UserRepository implements UserRepositoryInterface{
                 }
             })
 
-            if(success) return {success: "User successfully deleted"}
+            if(success) return {success: "User successfully deleted", id: userId}
         }
         catch(e){
             if(e instanceof Error){
